@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Alobar Preference Widgets Demo</string>
+    <string name="activity_main_help_text">Use the overflow menu to navigate to Settings.</string>
+    <string name="action_settings">Settings</string>
+    <string name="activity_settings_title">Settings</string>
+    <string name="pref_welcome_message_title">Welcome Message</string>
+    <string name="pref_persist_changes_title">Persist preference changes?</string>
+    <string name="pref_give_me_a_number_title">Give me a number</string>
+
+</resources>

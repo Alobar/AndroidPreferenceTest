@@ -1,0 +1,22 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:preference="http://schemas.android.com/apk/res-auto">
+
+    <EditTextPreference
+        android:defaultValue="Hello, World!"
+        android:key="key_welcome_message"
+        android:title="@string/pref_welcome_message_title"/>
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="key_persists_preferences"
+        android:title="@string/pref_persist_changes_title"/>
+
+    <alobar.preference.NumberPickerPreference
+        android:defaultValue="@integer/number_default_value"
+        android:key="key_give_me_a_number"
+        android:title="@string/pref_give_me_a_number_title"
+        preference:maxValue="@integer/number_max_value"
+        preference:minValue="@integer/number_min_value"
+        preference:wrapSelectorWheel="false"/>
+
+</PreferenceScreen>
