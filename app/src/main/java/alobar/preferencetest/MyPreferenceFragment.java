@@ -14,7 +14,7 @@ public class MyPreferenceFragment extends PreferenceFragment
 
     private final static String TAG = MyPreferenceFragment.class.getSimpleName();
 
-    // must be the same key as used in /res/xml/prefs.xml
+    // must be the same keys as used in /res/xml/prefs.xml
     private final static String PREF_PERSISTS_PREFERENCES = "key_persists_preferences";
     private final static String PREF_GIVE_ME_A_NUMBER = "key_give_me_a_number";
 
@@ -22,8 +22,15 @@ public class MyPreferenceFragment extends PreferenceFragment
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs);
+
+        // attach change listeners to the preference widgets
         findPreference(PREF_PERSISTS_PREFERENCES).setOnPreferenceChangeListener(this);
         findPreference(PREF_GIVE_ME_A_NUMBER).setOnPreferenceChangeListener(this);
+
+        // init the summary of the 'Give me a number' preference widget with its value
+        int aNumber = getPreferenceManager().getSharedPreferences().getInt(PREF_GIVE_ME_A_NUMBER, 0);
+        Preference giveMeANumberPreference = findPreference(PREF_GIVE_ME_A_NUMBER);
+        giveMeANumberPreference.setSummary(Integer.toString(aNumber));
     }
 
     @Override
@@ -51,11 +58,16 @@ public class MyPreferenceFragment extends PreferenceFragment
         // return whether to allow or block the update
         switch (preference.getKey()) {
             case PREF_PERSISTS_PREFERENCES:
-                // we want this preference to always be persisted
+                // This preference should always be persisted
                 return true;
             case PREF_GIVE_ME_A_NUMBER:
-                // we want this preference to be persisted conditionally
-                return getPreferenceManager().getSharedPreferences().getBoolean(PREF_PERSISTS_PREFERENCES, false);
+                // we want this preference to only be persisted when PREF_PERSIST_PREFERENCES is set to true.
+                boolean allowChange = getPreferenceManager().getSharedPreferences().getBoolean(PREF_PERSISTS_PREFERENCES, false);
+                if (allowChange) {
+                    // update the summary of the 'Give me a number' preference widget with its new value
+                    preference.setSummary(newValue.toString());
+                }
+                return allowChange;
             default:
                 return true;
         }
